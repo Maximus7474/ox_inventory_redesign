@@ -11,6 +11,7 @@ import DragPreview from './components/utils/DragPreview';
 import { fetchNui } from './utils/fetchNui';
 import { useDragDropManager } from 'react-dnd';
 import KeyPress from './components/utils/KeyPress';
+import { setDamage } from './store/damage';
 
 debugData([
   {
@@ -110,6 +111,10 @@ const App: React.FC = () => {
     manager.dispatch({ type: 'dnd-core/END_DRAG' });
   });
 
+  useNuiEvent('DamageCall', (data: any) => {
+    dispatch(setDamage(data));
+  });
+
   return (
     <div className="app-wrapper">
       <InventoryComponent />
@@ -119,8 +124,8 @@ const App: React.FC = () => {
   );
 };
 
-addEventListener("dragstart", function(event) {
-  event.preventDefault()
-})
+addEventListener('dragstart', function (event) {
+  event.preventDefault();
+});
 
 export default App;

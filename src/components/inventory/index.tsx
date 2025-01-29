@@ -19,6 +19,7 @@ import { FaHatCowboy } from 'react-icons/fa';
 import { GiConverseShoe, GiGymBag } from 'react-icons/gi';
 import { BsWatch } from 'react-icons/bs';
 import { onClothing } from '../../dnd/onClothing';
+import BodyDamage from './BodyDamage';
 
 const Inventory: React.FC = () => {
   const [inventoryVisible, setInventoryVisible] = useState(false);
@@ -53,56 +54,72 @@ const Inventory: React.FC = () => {
   return (
     <>
       <Fade in={inventoryVisible}>
-        <div className="inventory-wrapper">
-          <div style={{ backgroundColor: `rgba(29, 35, 39, 0.77)`, padding: '14px' }}>
-            <LeftInventory />
-          </div>
-          <div>
-            <div style={{ backgroundColor: `rgba(29, 35, 39, 0.77)`, padding: '14px' }}>
-              <InventoryControl />
+        <div className="inventory-wrapper-logo-parent">
+          <div className="inventory-wrapper">
+            <div className="inventory-wrapper-parent-end">
+              <div style={{ width: '180px' }}>
+                <div
+                  style={{
+                    backgroundColor: `rgba(29, 35, 39, 0.77)`,
+                    padding: '14px',
+                    borderRadius: '2px',
+                    marginBottom: 10,
+                  }}
+                >
+                  <InventoryControl />
+                </div>
+                <div style={{ backgroundColor: `rgba(29, 35, 39, 0.77)`, padding: '14px', borderRadius: '2px' }}>
+                  <div className="inventory-control">
+                    <button className="inventory-control-button-ext" onClick={() => handleClothingClick('shirt')}>
+                      <FaShirt size="2em" />
+                    </button>
+                    <button className="inventory-control-button-ext" onClick={() => handleClothingClick('hat')}>
+                      <FaHatCowboy size="2em" />
+                    </button>
+                    <button className="inventory-control-button-ext" onClick={() => handleClothingClick('mask')}>
+                      <FaMaskFace size="2em" />
+                    </button>
+                  </div>
+                  <div className="inventory-control">
+                    <button className="inventory-control-button-ext" onClick={() => handleClothingClick('vest')}>
+                      <FaVest size="2em" />
+                    </button>
+                    <button className="inventory-control-button-ext" onClick={() => handleClothingClick('glasses')}>
+                      <FaGlasses size="2em" />
+                    </button>
+                    <button className="inventory-control-button-ext" onClick={() => handleClothingClick('watch')}>
+                      <BsWatch size="2em" />
+                    </button>
+                  </div>
+                  <div className="inventory-control">
+                    <button className="inventory-control-button-ext" onClick={() => handleClothingClick('bag')}>
+                      <GiGymBag size="2em" />
+                    </button>
+                    <button className="inventory-control-button-ext" onClick={() => handleClothingClick('pants')}>
+                      <PiPants size="2em" />
+                    </button>
+                    <button className="inventory-control-button-ext" onClick={() => handleClothingClick('shoes')}>
+                      <GiConverseShoe size="2em" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div style={{ backgroundColor: `rgba(29, 35, 39, 0.77)`, padding: '14px', borderRadius: '2px' }}>
+                <LeftInventory />
+              </div>
             </div>
-            <br />
-            <div style={{ backgroundColor: `rgba(29, 35, 39, 0.77)`, padding: '14px' }}>
-              <div className="inventory-control">
-                <button className="inventory-control-button" onClick={() => handleClothingClick('shirt')}>
-                  <FaShirt size="2em" />
-                </button>
-                <button className="inventory-control-button" onClick={() => handleClothingClick('hat')}>
-                  <FaHatCowboy size="2em" />
-                </button>
-                <button className="inventory-control-button" onClick={() => handleClothingClick('mask')}>
-                  <FaMaskFace size="2em" />
-                </button>
+            <div className="inventory-wrapper-parent-start">
+              <div style={{ width: '180px' }}>
+                <BodyDamage />
               </div>
-              <div className="inventory-control">
-                <button className="inventory-control-button" onClick={() => handleClothingClick('vest')}>
-                  <FaVest size="2em" />
-                </button>
-                <button className="inventory-control-button" onClick={() => handleClothingClick('glasses')}>
-                  <FaGlasses size="2em" />
-                </button>
-                <button className="inventory-control-button" onClick={() => handleClothingClick('watch')}>
-                  <BsWatch size="2em" />
-                </button>
-              </div>
-              <div className="inventory-control">
-                <button className="inventory-control-button" onClick={() => handleClothingClick('bag')}>
-                  <GiGymBag size="2em" />
-                </button>
-                <button className="inventory-control-button" onClick={() => handleClothingClick('pants')}>
-                  <PiPants size="2em" />
-                </button>
-                <button className="inventory-control-button" onClick={() => handleClothingClick('shoes')}>
-                  <GiConverseShoe size="2em" />
-                </button>
+              <div style={{ backgroundColor: `rgba(29, 35, 39, 0.77)`, padding: '14px', borderRadius: '2px' }}>
+                <RightInventory />
               </div>
             </div>
+            <Tooltip />
+            <InventoryContext />
           </div>
-          <div style={{ backgroundColor: `rgba(29, 35, 39, 0.77)`, padding: '14px' }}>
-            <RightInventory />
-          </div>
-          <Tooltip />
-          <InventoryContext />
+          {/* </div> */}
         </div>
       </Fade>
       <InventoryHotbar />
