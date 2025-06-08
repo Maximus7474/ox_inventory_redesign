@@ -152,7 +152,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['UPPER_BODY']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Upperbody"
-        src={isEnvBrowser() ? iupperbody : getBodyPartImage('upperbody')}
+        src={getBodyPartImage('upperbody')}
       />
       <img
         style={{
@@ -163,7 +163,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['LOWER_BODY']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Lowerbody"
-        src={isEnvBrowser() ? ilowerbody : getBodyPartImage('lowerbody')}
+        src={getBodyPartImage('lowerbody')}
       />
       <img
         style={{
@@ -174,7 +174,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['LLEG']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Lleg"
-        src={isEnvBrowser() ? illeg : getBodyPartImage('lleg')}
+        src={getBodyPartImage('lleg')}
       />
       <img
         style={{
@@ -185,7 +185,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['RLEG']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Rleg"
-        src={isEnvBrowser() ? irleg : getBodyPartImage('rleg')}
+        src={getBodyPartImage('rleg')}
       />
       <img
         style={{
@@ -196,7 +196,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['RARM']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Rhand"
-        src={isEnvBrowser() ? irarm : getBodyPartImage('rarm')}
+        src={getBodyPartImage('rarm')}
       />
       <img
         style={{
@@ -207,7 +207,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['LARM']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Larm"
-        src={isEnvBrowser() ? ilarm : getBodyPartImage('larm')}
+        src={getBodyPartImage('larm')}
       />
       <img
         style={{
@@ -218,7 +218,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['LHAND']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Lparm"
-        src={isEnvBrowser() ? ilpalm : getBodyPartImage('lpalm')}
+        src={getBodyPartImage('lpalm')}
       />
       <img
         style={{
@@ -229,7 +229,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['NECK']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Neck"
-        src={isEnvBrowser() ? ineck : getBodyPartImage('neck')}
+        src={getBodyPartImage('neck')}
       />
       <img
         style={{
@@ -240,7 +240,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['HEAD']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Head"
-        src={isEnvBrowser() ? ihead : getBodyPartImage('head')}
+        src={getBodyPartImage('head')}
       />
       <img
         style={{
@@ -251,7 +251,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['RHAND']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Rarm"
-        src={isEnvBrowser() ? irpalm : getBodyPartImage('rpalm')}
+        src={getBodyPartImage('rpalm')}
       />
       <img
         style={{
@@ -262,7 +262,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['RFOOT']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="RFoot"
-        src={isEnvBrowser() ? irfoot : getBodyPartImage('rfoot')}
+        src={getBodyPartImage('rfoot')}
       />
       <img
         style={{
@@ -273,7 +273,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['LFOOT']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="LFoot"
-        src={isEnvBrowser() ? ilfoot : getBodyPartImage('lfoot')}
+        src={getBodyPartImage('lfoot')}
       />
     </div>
   );
