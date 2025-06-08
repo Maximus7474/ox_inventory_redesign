@@ -1,5 +1,3 @@
-import Arrowright from '../svg/Arrowright';
-import Arrowleft from '../svg/Arrowleft';
 import { flip, FloatingPortal, offset, shift, useFloating, useTransitionStyles } from '@floating-ui/react';
 import React from 'react';
 import { isEnvBrowser } from './misc';
