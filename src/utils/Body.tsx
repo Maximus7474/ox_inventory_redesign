@@ -1,22 +1,11 @@
-import illeg from './img/LLEG.png';
-import irleg from './img/RLEG.png';
-import iupperbody from './img/upperbody.png';
-import ilowerbody from './img/lowerbody.png';
-import irarm from './img/rarm.png';
-import ilarm from './img/larm.png';
-import ilpalm from './img/lpalm.png';
-import ineck from './img/neck.png';
-import ihead from './img/head.png';
-import irpalm from './img/rpalm.png';
-import irfoot from './img/rfoot.png';
-import ilfoot from './img/lfoot.png';
 import Arrowright from '../svg/Arrowright';
 import Arrowleft from '../svg/Arrowleft';
 import { flip, FloatingPortal, offset, shift, useFloating, useTransitionStyles } from '@floating-ui/react';
 import React from 'react';
-import { getItemUrl } from '../helpers';
 import { isEnvBrowser } from './misc';
 import { debugData } from './debugData';
+import { imagepath } from '../store/imagepath';
+
 debugData([
   {
     action: 'DamageCall',
@@ -116,6 +105,8 @@ debugData([
   },
 ]);
 
+const getBodyPartImage = (part: string): string => `${imagepath}/body-images/${part}.png`;
+
 export default function Body({ detaileddata }: { detaileddata: any }) {
   const [hoverData, setHoverData] = React.useState<boolean>(false);
   const [bodypart, setBodypart] = React.useState<string>('');
@@ -163,7 +154,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['UPPER_BODY']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Upperbody"
-        src={isEnvBrowser() ? iupperbody : getItemUrl('upperbody')}
+        src={isEnvBrowser() ? iupperbody : getBodyPartImage('upperbody')}
       />
       <img
         style={{
@@ -174,7 +165,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['LOWER_BODY']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Lowerbody"
-        src={isEnvBrowser() ? ilowerbody : getItemUrl('lowerbody')}
+        src={isEnvBrowser() ? ilowerbody : getBodyPartImage('lowerbody')}
       />
       <img
         style={{
@@ -185,7 +176,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['LLEG']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Lleg"
-        src={isEnvBrowser() ? illeg : getItemUrl('lleg')}
+        src={isEnvBrowser() ? illeg : getBodyPartImage('lleg')}
       />
       <img
         style={{
@@ -196,7 +187,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['RLEG']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Rleg"
-        src={isEnvBrowser() ? irleg : getItemUrl('rleg')}
+        src={isEnvBrowser() ? irleg : getBodyPartImage('rleg')}
       />
       <img
         style={{
@@ -207,7 +198,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['RARM']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Rhand"
-        src={isEnvBrowser() ? irarm : getItemUrl('rarm')}
+        src={isEnvBrowser() ? irarm : getBodyPartImage('rarm')}
       />
       <img
         style={{
@@ -218,7 +209,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['LARM']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Larm"
-        src={isEnvBrowser() ? ilarm : getItemUrl('larm')}
+        src={isEnvBrowser() ? ilarm : getBodyPartImage('larm')}
       />
       <img
         style={{
@@ -229,7 +220,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['LHAND']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Lparm"
-        src={isEnvBrowser() ? ilpalm : getItemUrl('lpalm')}
+        src={isEnvBrowser() ? ilpalm : getBodyPartImage('lpalm')}
       />
       <img
         style={{
@@ -240,7 +231,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['NECK']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Neck"
-        src={isEnvBrowser() ? ineck : getItemUrl('neck')}
+        src={isEnvBrowser() ? ineck : getBodyPartImage('neck')}
       />
       <img
         style={{
@@ -251,7 +242,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['HEAD']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Head"
-        src={isEnvBrowser() ? ihead : getItemUrl('head')}
+        src={isEnvBrowser() ? ihead : getBodyPartImage('head')}
       />
       <img
         style={{
@@ -262,7 +253,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['RHAND']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="Rarm"
-        src={isEnvBrowser() ? irpalm : getItemUrl('rpalm')}
+        src={isEnvBrowser() ? irpalm : getBodyPartImage('rpalm')}
       />
       <img
         style={{
@@ -273,7 +264,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['RFOOT']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="RFoot"
-        src={isEnvBrowser() ? irfoot : getItemUrl('rfoot')}
+        src={isEnvBrowser() ? irfoot : getBodyPartImage('rfoot')}
       />
       <img
         style={{
@@ -284,7 +275,7 @@ export default function Body({ detaileddata }: { detaileddata: any }) {
           filter: `sepia(${bodydamagecal['LFOOT']?.percent}%) saturate(300%) brightness(100%) hue-rotate(299deg)`,
         }}
         alt="LFoot"
-        src={isEnvBrowser() ? ilfoot : getItemUrl('lfoot')}
+        src={isEnvBrowser() ? ilfoot : getBodyPartImage('lfoot')}
       />
     </div>
   );
