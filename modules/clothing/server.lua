@@ -17,6 +17,8 @@ local clothesComponentID = { 1, 0, 2, 1, 7, 8, 11, 9, 7, 6, 5, 4, 6, 3 }
 local clothesComponentNames = { "mask", "hat", "earrings", "glasses", "chain", "undershirt", "jacket", "bodyarmor",
     "bracelet", "watch", "bag", "pants", "shoes", "gloves" }
 local clothesSlotID = { 11, 6, 8, 7, 16, 14, 12, 13, 10, 9, 17, 18, 19, 15 }
+-- Use statebag to define if the player can change clothes
+-- Useful for stopping a player changing clothes when in job outfit
 local UseExports = false
 local canCC
 local ox_inventory = exports.ox_inventory
