@@ -373,6 +373,7 @@ if Config.EnableJobOutfitsCommand then
 end
 
 lib.addCommand("reloadskin", { help = _L("commands.reloadskin.title") }, function(source)
+    Player(source).state:set('canChangeClothes', true, true)
     TriggerClientEvent("illenium-appearance:client:reloadSkin", source)
 end)
 

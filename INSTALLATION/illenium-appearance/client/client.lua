@@ -811,8 +811,6 @@ RegisterNetEvent("illenium-appearance:client:reloadSkin", function(bypassChecks)
     reloadSkinTimer = GetGameTimer()
     BackupPlayerStats()
 
-    exports['ox_inventory']:canChangeClothes(true)
-
     lib.callback("illenium-appearance:server:getAppearance", false, function(appearance)
         if not appearance then
             return
