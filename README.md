@@ -1,11 +1,7 @@
-# ox_inventory
+# ox_inventory redesign
 
 A complete inventory system for FiveM, implementing items, weapons, shops, and more without any strict framework dependency.
-
-![](https://img.shields.io/github/downloads/communityox/ox_inventory/total?logo=github)
-![](https://img.shields.io/github/downloads/communityox/ox_inventory/latest/total?logo=github)
-![](https://img.shields.io/github/contributors/communityox/ox_inventory?logo=github)
-![](https://img.shields.io/github/v/release/communityox/ox_inventory?logo=github)
+Forked from the Community Ox, which forked it from overextended, this resource inherits the same license and credits to previous project maintainers.
 
 ## 📚 Documentation
 
@@ -13,7 +9,15 @@ https://coxdocs.dev/ox_inventory
 
 ## 💾 Download
 
-https://github.com/communityox/ox_inventory/releases/latest/download/ox_inventory.zip
+https://github.com/Maximus7474/ox_inventory_redesign/releases/latest/download/ox_inventory.zip
+
+## Installation
+
+Refer to the [Installation Guide](./INSTALLATION//INSTALLATION_GUIDE.md)
+
+## Credits
+
+For more complete credits refer to the [credits file](./CREDITS.md)
 
 ## Supported frameworks
 
@@ -30,6 +34,7 @@ We do not guarantee compatibility or support for third-party resources.
 - Logging for important events, such as purchases, item movement, and item creation or removal.
 - Supports player-owned vehicles, licenses, and group systems implemented by frameworks.
 - Fully synchronised, allowing multiple players to [access the same inventory](https://user-images.githubusercontent.com/65407488/230926091-c0033732-d293-48c9-9d62-6f6ae0a8a488.mp4).
+- Clothing tab, allowing players to drag'n drop their clothing items to wear them.
 
 ### Items
 
