@@ -3,6 +3,8 @@
 A complete inventory system for FiveM, implementing items, weapons, shops, and more without any strict framework dependency.
 Forked from the Community Ox, which forked it from overextended, this resource inherits the same license and credits to previous project maintainers.
 
+![Inventory Design](./.github/assets/display-picture.png)
+
 ## 📚 Documentation
 
 https://coxdocs.dev/ox_inventory
