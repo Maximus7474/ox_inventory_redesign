@@ -1,58 +1,89 @@
 return {
-	['testburger'] = {
-		label = 'Test Burger',
-		weight = 220,
-		degrade = 60,
-		client = {
-			image = 'burger_chicken.png',
-			status = { hunger = 200000 },
-			anim = 'eating',
-			prop = 'burger',
-			usetime = 2500,
-			export = 'ox_inventory_examples.testburger'
-		},
-		server = {
-			export = 'ox_inventory_examples.testburger',
-			test = 'what an amazingly delicious burger, amirite?'
-		},
-		buttons = {
-			{
-				label = 'Lick it',
-				action = function(slot)
-					print('You licked the burger')
-				end
-			},
-			{
-				label = 'Squeeze it',
-				action = function(slot)
-					print('You squeezed the burger :(')
-				end
-			},
-			{
-				label = 'What do you call a vegan burger?',
-				group = 'Hamburger Puns',
-				action = function(slot)
-					print('A misteak.')
-				end
-			},
-			{
-				label = 'What do frogs like to eat with their hamburgers?',
-				group = 'Hamburger Puns',
-				action = function(slot)
-					print('French flies.')
-				end
-			},
-			{
-				label = 'Why were the burger and fries running?',
-				group = 'Hamburger Puns',
-				action = function(slot)
-					print('Because they\'re fast food.')
-				end
-			}
-		},
-		consume = 0.3
+--[[ Clothing ]]
+    ['mask'] = {
+		label = 'Mask',
+		weight = 100,
+		stack = false,
 	},
 
+	['hat'] = {
+		label = 'Hat',
+		weight = 100,
+		stack = false,
+	},
+
+	['earrings'] = {
+		label = 'Earrings',
+		weight = 100,
+		stack = false,
+	},
+
+	['glasses'] = {
+		label = 'Glasses',
+		weight = 100,
+		stack = false,
+	},
+
+	['chain'] = {
+		label = 'Chain',
+		weight = 100,
+		stack = false,
+	},
+
+	['undershirt'] = {
+		label = 'Undershirt',
+		weight = 100,
+		stack = false,
+	},
+
+	['jacket'] = {
+		label = 'Jacket',
+		weight = 100,
+		stack = false,
+	},
+
+	['bodyarmor'] = {
+		label = 'Body Armor',
+		weight = 100,
+		stack = false,
+	},
+
+	['bracelet'] = {
+		label = 'Bracelet',
+		weight = 100,
+		stack = false,
+	},
+
+	['watch'] = {
+		label = 'Watch',
+		weight = 100,
+		stack = false,
+	},
+
+	['bag'] = {
+		label = 'Bag',
+		weight = 100,
+		stack = false,
+	},
+
+	['pants'] = {
+		label = 'Pants',
+		weight = 100,
+		stack = false,
+	},
+
+	['shoes'] = {
+		label = 'Shoes',
+		weight = 100,
+		stack = false,
+	},
+
+	['gloves'] = {
+		label = 'Gloves',
+		weight = 100,
+		stack = false,
+	},
+--[[ Other ]]
 	['bandage'] = {
 		label = 'Bandage',
 		weight = 115,
@@ -192,21 +223,6 @@ return {
 		weight = 1000,
 		stack = false,
 		allowArmed = true
-	},
-
-	['armour'] = {
-		label = 'Bulletproof Vest',
-		weight = 3000,
-		stack = false,
-		client = {
-			anim = { dict = 'clothingshirt', clip = 'try_shirt_positive_d' },
-			usetime = 3500
-		}
-	},
-
-	['clothing'] = {
-		label = 'Clothing',
-		consume = 0,
 	},
 
 	['mastercard'] = {

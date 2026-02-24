@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Inventory } from '../../typings';
-import WeightBar from '../utils/WeightBar';
+import { Inventory, Slot } from '../../typings';
 import InventorySlot from './InventorySlot';
 import { getTotalWeight } from '../../helpers';
 import { useAppSelector } from '../../store';
@@ -8,9 +7,9 @@ import { useIntersection } from '../../hooks/useIntersection';
 
 const PAGE_SIZE = 30;
 
-const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
+const InventoryGrid: React.FC<{ inventory: Inventory, extraItems?: Slot[] }> = ({ inventory, extraItems = [] }) => {
   const weight = useMemo(
-    () => (inventory.maxWeight !== undefined ? Math.floor(getTotalWeight(inventory.items) * 1000) / 1000 : 0),
+    () => (inventory.maxWeight !== undefined ? Math.floor(getTotalWeight([...inventory.items, ...extraItems]) * 1000) / 1000 : 0),
     [inventory.maxWeight, inventory.items]
   );
   const [page, setPage] = useState(0);
@@ -23,11 +22,12 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
       setPage((prev) => ++prev);
     }
   }, [entry]);
+
   return (
     <>
       <div className="inventory-grid-wrapper" style={{ pointerEvents: isBusy ? 'none' : 'auto' }}>
-        <div>
-          <div className="inventory-grid-header-wrapper">
+        <div className='inventory-grid-header'>
+          <div className="inventory-grid-header-label-wrapper">
             <p>{inventory.label}</p>
             {inventory.maxWeight && (
               <p>
@@ -35,7 +35,6 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
               </p>
             )}
           </div>
-          <WeightBar percent={inventory.maxWeight ? (weight / inventory.maxWeight) * 100 : 0} />
         </div>
         <div className="inventory-grid-container" ref={containerRef}>
           <>

@@ -11,6 +11,9 @@ import DragPreview from './components/utils/DragPreview';
 import { fetchNui } from './utils/fetchNui';
 import { useDragDropManager } from 'react-dnd';
 import KeyPress from './components/utils/KeyPress';
+import { isEnvBrowser } from './utils/misc';
+import { useState } from 'react';
+import DebugMenu from './components/utils/DevMenu';
 
 debugData([
   {
@@ -49,12 +52,32 @@ debugData([
           { slot: 5, name: 'water', weight: 100, count: 1 },
           {
             slot: 6,
-            name: 'backwoods',
+            name: 'hat',
             weight: 100,
             count: 1,
             metadata: {
-              label: 'Russian Cream',
-              imageurl: 'https://i.imgur.com/2xHhTTz.png',
+              label: 'Baseball cap',
+              // imageurl: 'https://i.imgur.com/2xHhTTz.png',
+            },
+          },
+          {
+            slot: 9,
+            name: 'watch',
+            weight: 100,
+            count: 1,
+            metadata: {
+              label: 'Shiny Watch',
+              // imageurl: 'https://i.imgur.com/2xHhTTz.png',
+            },
+          },
+          {
+            slot: 12,
+            name: 'jacket',
+            weight: 100,
+            count: 1,
+            metadata: {
+              label: 'Rain Jacket',
+              // imageurl: 'https://i.imgur.com/2xHhTTz.png',
             },
           },
         ],
@@ -90,6 +113,7 @@ debugData([
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const manager = useDragDropManager();
+  const [devMenuVisible, setDevMenuVisibility] = useState<boolean>(false);
 
   useNuiEvent<{
     locale: { [key: string]: string };
@@ -115,6 +139,10 @@ const App: React.FC = () => {
       <InventoryComponent />
       <DragPreview />
       <KeyPress />
+
+      {isEnvBrowser() && (
+        <DebugMenu />
+      )}
     </div>
   );
 };

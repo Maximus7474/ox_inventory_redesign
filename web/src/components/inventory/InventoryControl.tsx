@@ -9,7 +9,12 @@ import { fetchNui } from '../../utils/fetchNui';
 import { Locale } from '../../store/locale';
 import UsefulControls from './UsefulControls';
 
-const InventoryControl: React.FC = () => {
+interface InvControlProps {
+  toggleClothing: (state: boolean) => void;
+  showClothing: boolean;
+}
+
+const InventoryControl: React.FC<InvControlProps> = ({ toggleClothing, showClothing }) => {
   const itemAmount = useAppSelector(selectItemAmount);
   const dispatch = useAppDispatch();
 
@@ -55,6 +60,21 @@ const InventoryControl: React.FC = () => {
           </button>
           <button className="inventory-control-button" onClick={() => fetchNui('exit')}>
             {Locale.ui_close || 'Close'}
+          </button>
+        </div>
+
+        <div className="inventory-control-wrapper">
+          <button
+            className={`inventory-clothing-button ${showClothing ? 'active' : ''}`}
+            onClick={() => toggleClothing(true)}
+          >
+            {Locale.ui_inventory || 'Inventory'}
+          </button>
+          <button
+            className={`inventory-clothing-button ${!showClothing ? 'active' : ''}`}
+            onClick={() => toggleClothing(false)}
+          >
+            {Locale.ui_clothing || 'Clothing'}
           </button>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { onUse } from '../../dnd/onUse';
 import { onGive } from '../../dnd/onGive';
 import { onDrop } from '../../dnd/onDrop';
@@ -7,8 +8,9 @@ import { Locale } from '../../store/locale';
 import { isSlotWithItem } from '../../helpers';
 import { setClipboard } from '../../utils/setClipboard';
 import { useAppSelector } from '../../store';
-import React from 'react';
 import { Menu, MenuItem } from '../utils/menu/Menu';
+import RenameModal from '../utils/RenameModal';
+import Fade from '../utils/transitions/Fade';
 
 interface DataProps {
   action: string;
@@ -36,6 +38,7 @@ interface ButtonWithIndex extends Button {
 interface GroupedButtons extends Array<Group> {}
 
 const InventoryContext: React.FC = () => {
+  const [isRenameModalOpen, setRenameModalOpen] = useState<boolean>(false);
   const contextMenu = useAppSelector((state) => state.contextMenu);
   const item = contextMenu.item;
 
@@ -58,6 +61,9 @@ const InventoryContext: React.FC = () => {
       case 'removeAmmo':
         fetchNui('removeAmmo', item.slot);
         break;
+      case 'rename':
+        setRenameModalOpen(true);
+        break;
       case 'copy':
         setClipboard(data.serial || '');
         break;
@@ -65,6 +71,11 @@ const InventoryContext: React.FC = () => {
         fetchNui('useButton', { id: (data?.id || 0) + 1, slot: item.slot });
         break;
     }
+  };
+
+  const handleRename = (newName: string) => {
+    if (!item) return;
+    fetchNui('renameItem', { slot: item.slot, newName });
   };
 
   const groupButtons = (buttons: any): GroupedButtons => {
@@ -93,6 +104,7 @@ const InventoryContext: React.FC = () => {
     <>
       <Menu>
         <MenuItem onClick={() => handleClick({ action: 'use' })} label={Locale.ui_use || 'Use'} />
+        <MenuItem onClick={() => handleClick({ action: 'rename' })} label={Locale.ui_rename || 'Rename'} />
         <MenuItem onClick={() => handleClick({ action: 'give' })} label={Locale.ui_give || 'Give'} />
         <MenuItem onClick={() => handleClick({ action: 'drop' })} label={Locale.ui_drop || 'Drop'} />
         {item && item.metadata?.ammo > 0 && (
@@ -146,6 +158,14 @@ const InventoryContext: React.FC = () => {
           </>
         )}
       </Menu>
+
+      <Fade in={isRenameModalOpen}>
+        <RenameModal
+          isOpen={isRenameModalOpen}
+          onClose={() => setRenameModalOpen(false)}
+          onSubmit={handleRename}
+        />
+      </Fade>
     </>
   );
 };

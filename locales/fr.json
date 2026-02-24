@@ -18,6 +18,8 @@
   "ui_alt_lmb": "Utiliser un item rapidement",
   "ui_ctrl_c": "En passant la souris sur une arme, copie son numéro de série",
   "ui_remove_ammo": "Vider le chargeur",
+  "ui_clothing": "Vêtements",
+  "ui_inventory": "Inventaire",
   "ammo_type": "Type de munition",
   "$": "$",
   "male": "Homme",

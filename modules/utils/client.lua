@@ -71,6 +71,9 @@ end
 
 -- Replace ox_inventory notify with ox_lib (backwards compatibility)
 function Utils.Notify(data)
+    -- Force the notification top left otherwise it's hidden by the inventory
+    -- ToDo: create a separate system to overlay within the inventory UI
+    data.position = "top-left"
     data.description = data.text
     data.text = nil
     lib.notify(data)

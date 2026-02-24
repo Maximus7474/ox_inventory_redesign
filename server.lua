@@ -382,6 +382,19 @@ RegisterNetEvent('ox_inventory:usedItemInternal', function(slot)
     inventory.usingItem = nil
 end)
 
+RegisterNetEvent('ox_inventory:renameItemInternal', function(slotId, newName)
+	local src = source
+	local inv = Inventory(src)
+
+	local slot = inv and inv.items[slotId]
+	if not slot then return end
+
+	local metadata = slot?.metadata or {}
+	metadata.label = newName
+
+	Inventory.SetMetadata(src, slotId, metadata)
+end)
+
 ---@param source number
 ---@param itemName string
 ---@param slot number?

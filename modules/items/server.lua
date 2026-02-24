@@ -175,7 +175,7 @@ function Items.Metadata(inv, item, metadata, count)
 
 	if item.weapon then
 		if type(metadata) ~= 'table' then metadata = {} end
-		if not metadata.durability then 
+		if not metadata.durability then
 			metadata = setItemDurability(item, metadata)
 		end
 		if not metadata.ammo and item.ammoname then metadata.ammo = 0 end

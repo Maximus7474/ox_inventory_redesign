@@ -99,6 +99,7 @@ const SlotTooltip: React.ForwardRefRenderFunction<
               {ingredients &&
                 ingredients.map((ingredient) => {
                   const [item, count] = [ingredient[0], ingredient[1]];
+
                   return (
                     <div className="tooltip-ingredient" key={`ingredient-${item}`}>
                       <img src={item ? getItemUrl(item) : 'none'} alt="item-image" />

@@ -94,7 +94,7 @@ Item('bandage', function(data, slot)
 	ox_inventory:useItem(data, function(data)
 		if data then
 			SetEntityHealth(cache.ped, math.min(maxHealth, math.floor(health + maxHealth / 16)))
-			lib.notify({ description = 'You feel better already' })
+			lib.notify({ position = "top-left", description = 'You feel better already' })
 		end
 	end)
 end)
