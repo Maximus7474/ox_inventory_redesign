@@ -6,7 +6,7 @@ require 'modules.shops.server'
 require 'modules.pefcl.server'
 
 if GetConvar('inventory:versioncheck', 'true') == 'true' then
-	lib.versionCheck('communityox/ox_inventory')
+	lib.versionCheck('Maximus7474/ox_inventory_redesign')
 end
 
 local TriggerEventHooks = require 'modules.hooks.server'
