@@ -13,68 +13,7 @@
     Modified by: https://github.com/Maximus7474
 --]]
 
-local animations = {
-    components = {
-        [1] = { --[[ berd ]]
-            dict = "mp_masks@standard_car@ds@",
-            anim = "put_on_mask",
-            move = 51,
-            duration = 600
-        },
-        [4] = { --[[ lowr ]]
-            dict = "re@construction",
-            anim = "out_of_breath",
-            move = 51,
-            duration = 1300
-        },
-        [6] = { --[[ feet ]]
-            dict = "random@domestic",
-            anim = "pickup_low",
-            move = 51,
-            duration = 1300
-        },
-        [11] = { --[[ jbib ]]
-            dict = "clothingtie",
-            anim = "try_tie_negative_a",
-            move = 51,
-            duration = 1200
-        }
-    },
-    props = {
-        [0] = {
-            on = {
-                dict = "veh@common@fp_helmet@",
-                anim = "put_on_helmet",
-                move = 51,
-                duration = 1800,
-                wait = 1400
-            },
-            off = {
-                dict = "veh@bike@common@front@base",
-                anim = "take_off_helmet_stand_l",
-                move = 51,
-                duration = 1200,
-                wait = 600
-            },
-        },
-        [1] = {
-            on = {
-                dict = "clothingspecs",
-                anim = "try_glasses_neutral_b",
-                move = 51,
-                duration = 1200,
-                wait = 1000
-            },
-            off = {
-                dict = "clothingspecs",
-                anim = "take_off",
-                move = 51,
-                duration = 1200,
-                wait = 800
-            },
-        }
-    }
-}
+local animations = require 'data.clothing'.animations
 
 RegisterNetEvent('setPedComponent', function(components)
     local animation = animations.components[components.component_id]
