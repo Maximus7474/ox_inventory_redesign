@@ -55,60 +55,11 @@ local defaultClothingMen = {
     [14] = { draw = 15, text = 0 }
 }
 
-local function findClothesSlot(slot)
-    for i = 1, #clothesSlotID do
-        if slot == clothesSlotID[i] then
-            return true
-        end
-    end
-    return false
-end
-
-local addItems = ox_inventory:registerHook('createItem', function(payload)
-    if not payload.inventoryId then return end
-
-    local slot = ox_inventory:GetEmptySlot(payload.inventoryId)
-
-    -- * terrible solution, too lazy to make a better one
-    local slotExists = lib.waitFor(function()
-        return findClothesSlot(slot)
-    end)
-
-    if slotExists then
-        SetTimeout(250, function()
-            local secondCheck = findClothesSlot(slot)
-            if secondCheck then
-                ox_inventory:RemoveItem(payload.inventoryId, payload.item.name, payload.count, nil, slot)
-                ox_inventory:CustomDrop('Drop', {
-                    {
-                        payload.item.name,
-                        payload.count,
-                        payload.metadata
-                    }
-                }, GetEntityCoords(GetPlayerPed(payload.inventoryId)))
-                lib.notify(payload.inventoryId, {
-                    position = "top-left",
-                    description = 'Your inventory is full, items have been dropped on the ground.',
-                    type = 'error'
-                })
-            end
-        end)
-    end
-end, {
-    print = false,
-})
-
+-- Sanity check, because of the UI layout you can't really buy and item
+-- and drop it in a clothing slot, good to keep I guess
 local buyItem = ox_inventory:registerHook('buyItem', function(payload)
     local slot = payload.toSlot
-    local slotExists = false
-    for _, id in ipairs(clothesSlotID) do
-        if id == slot then
-            slotExists = true
-            break
-        end
-    end
-
-    return not slotExists
+    return not table.contains(clothesSlotID, slot)
 end, {
     print = false,
 })
@@ -604,6 +555,14 @@ local checkMovingItems = ox_inventory:registerHook('swapItems', function(payload
 end, {
     print = false,
 })
+
+--[[
+
+ToDo: check & implement proper bag system, behaviour:
+- If player has a bag -> extend inventory size by X slots
+- If player removes bag -> take items in X last slots and add to bag item (container style)
+
+]]
 
 ---@param source number
 ---@param itemMetadata table
