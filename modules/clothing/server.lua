@@ -613,13 +613,6 @@ local function onPlayerLoaded(source)
     end
 end
 
-RegisterNetEvent('QBCore:Server:OnPlayerLoaded', function()
-    local src = source
-    if not src then return end
-
-    onPlayerLoaded(src)
-end)
-
 RegisterNetEvent('esx:playerLoaded', function(playerId)
     if not playerId then return end
 

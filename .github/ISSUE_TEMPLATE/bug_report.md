@@ -11,7 +11,7 @@ assignees: ''
 A clear and concise description of what the bug is.
 
 **Framework**
-The framework your server uses for players (e.g. Ox, ESX, QB).
+The framework your server uses for players (e.g. Ox, ESX, Qbox).
 
 **Resource version**
 The version number listed in fxmanifest.lua, or optionally a commit hash.
