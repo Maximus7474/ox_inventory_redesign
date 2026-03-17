@@ -1,5 +1,22 @@
 if not lib then return end
 
+local clothingData = require 'data.clothing'
+
+local function itemCanBePlacedInSlot(invType, item, slot)
+    if invType ~= 'player' then return true end
+    if not table.contains(clothingData.clothesSlotID, slot) then return true end
+    if not table.contains(clothingData.clothesComponentNames, item) then return false end
+
+    local clothIdx
+    for i = 1, #clothingData.clothesComponentNames do
+        if item == clothingData.clothesComponentNames[i] then
+            return true
+        end
+    end
+
+    return false
+end
+
 local Inventory = {}
 
 ---@type table<any, OxInventory>
@@ -1120,7 +1137,7 @@ function Inventory.AddItem(inv, item, count, metadata, slot, cb)
 
 	metadata = assertMetadata(metadata)
 
-	if slot then
+	if slot and itemCanBePlacedInSlot(inv.type, item.name, slot) then
 		local slotData = inv.items[slot]
 		slotMetadata, slotCount = Items.Metadata(inv.id, item, metadata and table.clone(metadata) or {}, count)
 
@@ -1135,6 +1152,10 @@ function Inventory.AddItem(inv, item, count, metadata, slot, cb)
 
 		for i = 1, inv.slots do
 			local slotData = items[i]
+
+            -- ToDo: if item is clothing and placed in clothing slot
+            -- Apply clothing
+            if not itemCanBePlacedInSlot(inv.type, item.name, i) then goto skip end
 
 			if item.stack and slotData ~= nil and slotData.name == item.name and table.matches(slotData.metadata, slotMetadata) then
 				toSlot = i
@@ -1153,6 +1174,8 @@ function Inventory.AddItem(inv, item, count, metadata, slot, cb)
 			elseif not toSlot and not slotData then
 				toSlot = i
 			end
+
+            ::skip::
 		end
 	end
 
@@ -2129,7 +2152,7 @@ function Inventory.GetEmptySlot(inv)
 	local items = inventory.items
 
 	for i = 1, inventory.slots do
-		if not items[i] then
+		if not items[i] and not table.contains(clothingData.clothesSlotID, i) then
 			return i
 		end
 	end
