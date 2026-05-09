@@ -10,7 +10,7 @@ end
 -- Do not modify this file at all. This isn't a "config" file. You want to change
 -- resource settings? Use convars like you were told in the documentation.
 -- You did read the docs, right? Probably not, if you're here.
--- https://coxdocs.dev/ox_inventory#config
+-- https://overextended.dev/ox_inventory#config
 
 shared = {
     resource = GetCurrentResourceName(),
@@ -66,6 +66,12 @@ if IsDuplicityVersion() then
 				["burger", 1, 1]
 			]
 		]])),
+        validhosts = json.decode(GetConvar('inventory:validhosts', [[
+			{
+                "r2.fivemanage.com": true,
+                "i.fmfile.com": true
+            }
+		]])),
     }
 
     local accounts = json.decode(GetConvar('inventory:accounts', '["money"]'))
@@ -114,8 +120,8 @@ else
 
     local fallbackmarker = {
         type = 0,
-        colour = {150, 150, 150},
-        scale = {0.5, 0.5, 0.5}
+        colour = { 150, 150, 150 },
+        scale = { 0.5, 0.5, 0.5 }
     }
 
     client.shopmarker = json.decode(GetConvar('inventory:shopmarker', [[
@@ -224,7 +230,7 @@ end
 
 if not LoadResourceFile(shared.resource, 'web/build/index.html') then
     return spamError(
-        'UI has not been built, refer to the documentation or download a release build.\n	^3https://coxdocs.dev/ox_inventory^0')
+        'UI has not been built, refer to the documentation or download a release build.\n	^3https://overextended.dev/ox_inventory^0')
 end
 
 -- No we're not going to support qtarget any longer.

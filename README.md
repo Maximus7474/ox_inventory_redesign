@@ -1,17 +1,15 @@
 # ox_inventory redesign
 
 A complete inventory system for FiveM, implementing items, weapons, shops, and more without any strict framework dependency.
-Forked from the Community Ox, which forked it from overextended, this resource inherits the same license and credits to previous project maintainers.
+Forked from overextended, this resource inherits the same license and credits to previous project maintainers.
 
 ![Inventory Design](./.github/assets/display-picture.png)
 
 ## 📚 Documentation
 
-https://coxdocs.dev/ox_inventory
+https://overextended.dev/ox_inventory
 
 ## 💾 Download
-
-https://github.com/Maximus7474/ox_inventory_redesign/releases/latest/download/ox_inventory.zip
 
 ## Installation
 
@@ -25,7 +23,7 @@ For more complete credits refer to the [credits file](./CREDITS.md)
 
 We do not guarantee compatibility or support for third-party resources.
 
-- [ox_core](https://github.com/communityox/ox_core)
+- [ox_core](https://github.com/overextended/ox_core)
 - [esx](https://github.com/esx-framework/esx_core)
 - [qbox](https://github.com/Qbox-project/qbx_core)
 - [nd_core](https://github.com/ND-Framework/ND_Core)

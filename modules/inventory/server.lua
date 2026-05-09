@@ -112,7 +112,7 @@ local GetVehicleNumberPlateText = GetVehicleNumberPlateText
 
 ---Atempts to lazily load inventory data from the database or create a new player-owned instance for "personal" stashes
 ---@param data table
----@param player table
+---@param player OxInventory
 ---@param ignoreSecurityChecks boolean
 ---@return OxInventory | false | nil
 local function loadInventoryData(data, player, ignoreSecurityChecks)
@@ -215,6 +215,7 @@ local function loadInventoryData(data, player, ignoreSecurityChecks)
 				inventory = Inventory.Create(stash.name, stash.label or stash.name, 'stash', stash.slots, 0, stash.maxWeight, owner, nil, stash.groups)
                 inventory.coords = stash.coords
                 inventory.distance = stash.distance
+                inventory.instance = stash.instance
 			end
 		end
 	end
@@ -384,15 +385,29 @@ local function minimal(inv)
 	return inventory
 end
 
+local Items = require 'modules.items.server'
+
 ---@param inv inventory
----@param item table
+---@param item table | string
 ---@param count number
 ---@param metadata any
----@param slot any
+---@param slot number
 function Inventory.SetSlot(inv, item, count, metadata, slot)
 	inv = Inventory(inv) --[[@as OxInventory]]
 
-	if not inv then return end
+    if not inv?.slots then return false, 'invalid_inventory' end
+
+   	if type(count) ~= 'number' then return false, 'invalid_count' end
+
+    count = math.floor(count + 0.5)
+
+	if count <= 0 then return false, 'negative_count' end
+
+    if type(item) ~= 'table' then
+        item = Items(item)
+
+        if not item then return false, 'invalid_item' end
+    end
 
 	local currentSlot = inv.items[slot]
 	local newCount = currentSlot and currentSlot.count + count or count
@@ -416,8 +431,6 @@ function Inventory.SetSlot(inv, item, count, metadata, slot)
 
 	return currentSlot
 end
-
-local Items = require 'modules.items.server'
 
 CreateThread(function()
     Inventory.accounts = server.accounts
@@ -1346,7 +1359,21 @@ function Inventory.RemoveItem(inv, item, count, metadata, slot, ignoreTotal, str
 
 	inv = Inventory(inv) --[[@as OxInventory]]
 
-	if not inv?.slots then return false, 'invalid_inventory' end
+    if not inv?.slots then return false, 'invalid_inventory' end
+
+    if slot then
+        local slotItem = inv.items[slot]
+
+        if not slotItem then
+            return false, 'no_item_in_slot'
+        end
+
+        if count > slotItem.count then
+            if not ignoreTotal then return false, 'not_enough_items_in_slot' end
+
+            count = slotItem.count
+        end
+    end
 
 	metadata = assertMetadata(metadata)
 	if strict == nil then strict = true end
@@ -1657,16 +1684,21 @@ local function dropItem(source, playerInventory, fromData, data)
 	}
 end
 
-local activeSlots = {}
+local GetLocks = require 'modules.locks'
 
 ---@param source number
 ---@param data SwapSlotData
 lib.callback.register('ox_inventory:swapItems', function(source, data)
+	if data.fromType ~= data.toType and data.toType ~= 'player' and data.fromType ~= 'player' then
+        Utils.LogExploit(source, 'swapItems', 'Triggered event with invalid data', true)
+        return
+    end
+
 	if data.count < 1 then return end
 
 	local playerInventory = Inventory(source)
 
-	if not playerInventory then return end
+	if not playerInventory or not playerInventory.openedBy[source] then return end
 
 	local toInventory = (data.toType == 'player' and playerInventory) or Inventory(playerInventory.open)
 	local fromInventory = (data.fromType == 'player' and playerInventory) or Inventory(playerInventory.open)
@@ -1678,10 +1710,12 @@ lib.callback.register('ox_inventory:swapItems', function(source, data)
 
     if data.toType == 'inspect' or data.fromType == 'inspect' then return end
 
-	local fromRef = ('%s:%s'):format(fromInventory.id, data.fromSlot)
-	local toRef = ('%s:%s'):format(toInventory.id, data.toSlot)
+    local activeSlots <close> = GetLocks({
+       	('inventory-%s:slot-%s'):format(fromInventory.id, data.fromSlot),
+        ('inventory-%s:slot-%s'):format(toInventory.id, data.toSlot)
+    })
 
-	if activeSlots[fromRef] or activeSlots[toRef] then
+	if not activeSlots then
 		return false, {
 			{
 				item = toInventory.items[data.toSlot] or { slot = data.toSlot },
@@ -1707,14 +1741,6 @@ lib.callback.register('ox_inventory:swapItems', function(source, data)
 		end
 	end
 
-	activeSlots[fromRef] = true
-	activeSlots[toRef] = true
-
-	local _ <close> = defer(function()
-		activeSlots[fromRef] = nil
-		activeSlots[toRef] = nil
-	end)
-
 	if toInventory and (data.toType == 'newdrop' or fromInventory ~= toInventory or data.fromSlot ~= data.toSlot) then
 		local fromData = fromInventory.items[data.fromSlot]
 
@@ -1736,7 +1762,7 @@ lib.callback.register('ox_inventory:swapItems', function(source, data)
         end
 
         if data.toType == 'newdrop' then
-            return dropItem(source, playerInventory, fromData, data)
+            return dropItem(source, fromInventory, fromData, data)
         end
 
 		if fromData then
@@ -2474,20 +2500,15 @@ local function giveItem(playerId, slot, target, count)
 		end
 
 		local toSlot = Inventory.GetSlotForItem(toInventory, data.name, data.metadata)
-		local fromRef = ('%s:%s'):format(fromInventory.id, slot)
-		local toRef = ('%s:%s'):format(toInventory.id, toSlot)
 
-		if activeSlots[fromRef] or activeSlots[toRef] then
+        local activeSlots <close> = GetLocks({
+            ('inventory-%s:slot-%s'):format(fromInventory.id, slot),
+            ('inventory-%s:slot-%s'):format(toInventory.id, toSlot)
+        })
+
+		if not activeSlots then
 			return { 'cannot_give', count, data.label }
 		end
-
-		activeSlots[fromRef] = true
-		activeSlots[toRef] = true
-
-		local _ <close> = defer(function()
-			activeSlots[fromRef] = nil
-			activeSlots[toRef] = nil
-		end)
 
 		if TriggerEventHooks('swapItems', {
 			source = fromInventory.id,
@@ -2706,6 +2727,7 @@ end
 ---@param owner? string|number|boolean
 ---@param groups? table<string, number>
 ---@param coords? vector3|table<vector3>
+---@param instance? string|number
 --- For simple integration with other resources that want to create valid stashes.
 --- This needs to be triggered before a player can open a stash.
 --- ```
@@ -2716,7 +2738,7 @@ end
 ---
 --- groups: { ['police'] = 0 }
 --- ```
-local function registerStash(name, label, slots, maxWeight, owner, groups, coords)
+local function registerStash(name, label, slots, maxWeight, owner, groups, coords, instance)
 	name, slots, maxWeight, coords = checkStashProperties({
 		name = name,
 		slots = slots,
@@ -2738,6 +2760,7 @@ local function registerStash(name, label, slots, maxWeight, owner, groups, coord
 				stash.maxWeight = maxWeight or stash.maxWeight
 				stash.groups = groups or stash.groups
 				stash.coords = coords or stash.coords
+				stash.instance = instance or stash.instance
 			end
 		end
 	end
@@ -2749,7 +2772,8 @@ local function registerStash(name, label, slots, maxWeight, owner, groups, coord
 		slots = slots,
 		maxWeight = maxWeight,
 		groups = groups,
-		coords = coords
+		coords = coords,
+		instance = instance
 	}
 end
 
@@ -2766,6 +2790,7 @@ function Inventory.CreateTemporaryStash(properties)
 
 	inventory.items, inventory.weight = generateItems(inventory, 'drop', properties.items)
 	inventory.coords = coords
+	inventory.instance = properties.instance
 
 	return inventory.id
 end
