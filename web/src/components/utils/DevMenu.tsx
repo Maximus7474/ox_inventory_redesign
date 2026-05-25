@@ -23,7 +23,7 @@ const DebugMenu: React.FC = () => {
 
     let rightInventory: Inventory = {
       id: 'shop',
-      type: 'crafting',
+      type: 'drop',
       slots: 5000,
       label: 'Bob Smith',
       // @ts-ignore
@@ -58,8 +58,6 @@ const DebugMenu: React.FC = () => {
         type: 'crafting',
         slots: 5,
         label: 'Crafting Table',
-        weight: 3000,
-        maxWeight: 5000,
         items: [{
           slot: 1,
           name: 'lockpick',
