@@ -19,4 +19,20 @@ export const Items: {
     usable: false,
     count: 0,
   },
+  lockpick: {
+    name: 'lockpick',
+    close: true,
+    label: 'Lockpick',
+    stack: true,
+    usable: true,
+    count: 0,
+  },
+  powersaw: {
+    name: 'powersaw',
+    close: true,
+    label: 'Power Saw',
+    stack: false,
+    usable: true,
+    count: 0,
+  },
 };
