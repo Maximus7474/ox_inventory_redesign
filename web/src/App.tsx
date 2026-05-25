@@ -11,6 +11,8 @@ import DragPreview from './components/utils/DragPreview';
 import { fetchNui } from './utils/fetchNui';
 import { useDragDropManager } from 'react-dnd';
 import KeyPress from './components/utils/KeyPress';
+import { isEnvBrowser } from './utils/misc';
+import DebugMenu from './components/utils/DevMenu';
 
 debugData([
   {
@@ -115,6 +117,9 @@ const App: React.FC = () => {
       <InventoryComponent />
       <DragPreview />
       <KeyPress />
+      {isEnvBrowser() && (
+        <DebugMenu />
+      )}
     </div>
   );
 };
